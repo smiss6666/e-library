@@ -46,6 +46,9 @@
                         <a href="{{ path('order.done', {'id': order.id}) }}" class="btn btn-success">Done</a>
                         <a href="{{ path('order.edit', {'id': order.id}) }}" class="btn btn-info">Edit</a>
                     {% endif %}
+                    {% if order.status == constant('App\\Entity\\Order::STATUS_Ordered') %}
+                    <a href="{{ path('order.cancel', {'id': order.id}) }}" class="btn btn-secondary">Cancel</a>
+                    {% endif %}
 
                     {# {% if order.status == constant('App\\Entity\\Order::STATUS_CANCELED') or order.status == constant('App\\Entity\\Order::STATUS_DONE') %} #}
                     {# <a href="{{ path('order.open', {'id': order.id}) }}" class="btn btn-primary">Open</a> #}

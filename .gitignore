@@ -1,0 +1,17 @@
+/.idea
+/config/secrets/prod/prod.decrypt.private.php
+/node_modules/
+/public/assets/
+/public/bundles/
+/public/upload/*
+/var/cache/*
+/var/log/*
+/var/session/*
+/vendor/
+/.env.local
+/.env.local.php
+/.env.*.local
+!.gitkeep
+/.php-version
+/bin
+/public

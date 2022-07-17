@@ -1,0 +1,24 @@
+{% set searchAction = action is defined ? action : null %}
+{% set showStatus = showStatus is defined ? showStatus : true %}
+
+<form action="{{ searchAction }}" method="get" class="form-inline">
+    <input class="form-control mr-sm-2"
+           type="search" placeholder="Search" aria-label="Search"
+           name="q"
+           value="{{ app.request.get('q') }}"
+    >
+
+    {% if showStatus %}
+        <select class="form-control mr-sm-2" name="status">
+            <option value="">Order Status: All</option>
+            {% for key, status in statuses %}
+                <option value="{{ key }}"
+                    {{ app.request.get('status') == key ? 'selected' }}
+                >
+                    {{ status }}
+                </option>
+            {% endfor %}
+        </select>
+    {% endif %}
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+</form>

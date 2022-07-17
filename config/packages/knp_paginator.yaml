@@ -1,0 +1,6 @@
+knp_paginator:
+    default_options:
+        page_name: p                # page query parameter name
+        page_out_of_range: 'fix'    # if page number exceeds the last page. Options: 'fix'(return last page); 'throwException'
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template

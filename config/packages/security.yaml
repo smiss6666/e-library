@@ -1,0 +1,52 @@
+security:
+    encoders:
+        App\Entity\Contracts\UserInterface:
+            algorithm: bcrypt
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        users:
+            entity:
+                class: 'App\Entity\User'
+                property: 'username'
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            anonymous: ~
+            logout:
+                path:   /logout
+                target: /login
+            user_checker: App\Security\UserChecker\UserChecker
+            guard:
+                authenticators:
+                    - App\Security\Authenticator\UserAuthenticator
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    role_hierarchy:
+        ROLE_USER:   [IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED]
+        ROLE_AUTHOR: [ROLE_AUTHOR]
+        ROLE_READER: [ROLE_READER]
+        ROLE_ADMIN:         [ROLE_USER, ROLE_ADMIN]
+        ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+#        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/admin/, roles: [ROLE_SUPER_ADMIN,ROLE_ADMIN,ROLE_EDITOR] }
+        - { path: ^/book/list, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: [IS_AUTHENTICATED_FULLY] }

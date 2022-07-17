@@ -1,0 +1,34 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{#{% block beelab_recaptcha2_widget %}#}
+{#    {% apply spaceless %}#}
+{#        <div class="recaptcha-holder" data-sitekey="{{ site_key }}"></div>#}
+{#    {% endapply %}#}
+{#{% endblock %}#}
+
+{#{% block date_widget -%}#}
+{#    {%- if widget == 'single_text' -%}#}
+{#        {{- block('form_widget_simple') -}}#}
+{#    {%- else -%}#}
+{#        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) -%}#}
+{#        {%- if datetime is not defined or not datetime -%}#}
+{#            <div {{ block('widget_container_attributes') -}}>#}
+{#        {%- endif %}#}
+{#        {%- if form.year.vars.placeholder is empty and form.month.vars.placeholder is empty and form.day.vars.placeholder is empty -%}#}
+{#            <div class="sr-only">#}
+{#                {{ form_label(form.year) }}#}
+{#                {{ form_label(form.month) }}#}
+{#                {{ form_label(form.day) }}#}
+{#            </div>#}
+{#        {%- endif -%}#}
+
+{#        {{- date_pattern|replace({#}
+{#            '{{ year }}': form_widget(form.year),#}
+{#            '{{ month }}': form_widget(form.month),#}
+{#            '{{ day }}': form_widget(form.day),#}
+{#        }) | raw -}}#}
+{#        {%- if datetime is not defined or not datetime -%}#}
+{#            </div>#}
+{#        {%- endif -%}#}
+{#    {%- endif -%}#}
+{#{%- endblock date_widget %}#}

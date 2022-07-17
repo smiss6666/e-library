@@ -1,0 +1,2 @@
+USERNAME_TAKEN:     'User "%USERNAME%" already registered'
+EMAIL_TAKEN:        'E-Mail "%EMAIL%" already registered'

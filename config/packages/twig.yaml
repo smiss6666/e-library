@@ -1,0 +1,19 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    exception_controller: null
+    paths:
+        '%kernel.project_dir%/templates': App
+        #        '%kernel.project_dir%/templates/bundles/Twig': Twig
+#        '%kernel.project_dir%/templates/bundles/SonataAdmin': SonataAdmin
+#        '%kernel.project_dir%/templates/bundles/VichUploader': VichUploader
+        '%kernel.project_dir%/public': public
+    globals:
+        locale: '%locale%'
+        penalty: '%penalty%'
+        expireColor: '%expireColor%'
+    form_themes:
+        - 'form_themes/default.html.twig'
+#        - '@SonataForm/Form/datepicker.html.twig'
+#        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

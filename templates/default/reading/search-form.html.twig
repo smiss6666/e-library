@@ -1,0 +1,24 @@
+{% set searchAction = action is defined ? action : null %}
+{% set showReadingType = showReadingType is defined ? showReadingType : true %}
+
+<form action="{{ searchAction }}" method="get" class="form-inline">
+    <input class="form-control mr-sm-2"
+           type="search" placeholder="Search" aria-label="Search"
+           name="q"
+           value="{{ app.request.get('q') }}"
+    >
+
+    {% if showReadingType %}
+        <select class="form-control mr-sm-2" name="reading_type">
+            <option value="">Reading Type: All</option>
+            {% for key, readingType in readingTypes %}
+                <option value="{{ key }}"
+                    {{ app.request.get('reading_type') == key ? 'selected' }}
+                >
+                    {{ readingType }}
+                </option>
+            {% endfor %}
+        </select>
+    {% endif %}
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+</form>

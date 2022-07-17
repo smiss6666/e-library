@@ -1,0 +1,13 @@
+{% set breadcrumbs = breadcrumbs is defined ? breadcrumbs : [] %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+{#        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Home</a></li>#}
+        {% for breadcrumb in breadcrumbs %}
+            {% set active = breadcrumb.active is defined and breadcrumb.active %}
+            <li class="breadcrumb-item {{ active }}" aria-current="page">
+                <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a>
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

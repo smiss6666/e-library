@@ -1,0 +1,37 @@
+parameters:
+    locale: 'en'
+    timezone: '%env(TIMEZONE)%'
+    public_dir: '%kernel.project_dir%/public'
+    data_dir: '%kernel.project_dir%/var/data'
+    storage_cache_dir: '%kernel.project_dir%/var/cache/storage'
+    penalty: '%env(PENALTY)%'
+    expireColor: '%env(EXPIRE_COLOR)%'
+
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+        bind:
+            $projectDir: '%kernel.project_dir%'
+            $publicDir: '%public_dir%'
+            $dataDir: '%data_dir%'
+            $cacheDir: '%kernel.cache_dir%'
+            $locale: '%locale%'
+
+    _instanceof:
+        App\EventListener\Doctrine\EntityListenerInterface:
+            tags:
+                - { name: doctrine.orm.entity_listener, lazy: true }
+
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']

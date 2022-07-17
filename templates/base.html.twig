@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ app.request is defined and app.request is not null ? app.request.locale : null }}">
+<head>
+    <meta charset="UTF-8">
+    {% block seo %}
+        <title>Liblary</title>
+    {% endblock %}
+    {% block head %}
+    {% endblock %}
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

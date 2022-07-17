@@ -1,0 +1,36 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('book.list'), 'title': 'Books'},
+        {'url': path('book.order', {'id': id}), 'title': 'Order', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('book.order', {'id': id}) }}" method="post" novalidate="novalidate">
+
+        <div class="form-group">
+            <label>Book</label>
+            <p>{{ book.title }}</p>
+        </div>
+
+        <div class="form-group">
+            <label>Authors</label>
+            <p>
+                {% for author in book.authors %}
+                    {{ author.first_name }} {{ author.last_name }}
+                    {{ loop.last == false ? ', ' : null }}
+                {% endfor %}
+            </p>
+        </div>
+
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+
+{% endblock %}
+

@@ -1,0 +1,3 @@
+webpack_encore:
+    cache: true
+    strict_mode: false

@@ -1,0 +1,52 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('reader.list'), 'title': 'Readers', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ path('reader.add') }}" class="btn btn-primary mb-2 float-right">Add</a>
+    <div class="float-left mb-2 mr-2">
+        {% include 'default/_partials/search-form.html.twig' with {'action': path('reader.list'), 'showActive': true }  %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.active ? 'Active' : 'InActive' }}</td>
+                <td>
+                    <a href="{{ path('reader.edit', {'id': user.id}) }}" class="btn btn-info">Edit</a>
+                    <a href="{{ path('reader.delete', {'id': user.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}
+

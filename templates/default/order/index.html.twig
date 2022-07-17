@@ -1,0 +1,100 @@
+{% extends 'layout.main.html.twig' %}
+{# @var \App\Service\Manager\BookManager bookManager #}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('order.list'), 'title': 'Orders', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+{#    {% if app.user and app.user.librarian %}#}
+{#        <a href="{{ path('order.add') }}" class="btn btn-info mb-2">Add</a>#}
+{#    {% endif %}#}
+    <div class="float-right mb-2 mr-2">
+        {% include 'default/order/search-form.html.twig' with {'action': path('order.list') } %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Reader</th>
+            <th scope="col">Book</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Authors</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for order in orders %}
+            <tr>
+                <th scope="row">{{ order.id }}</th>
+                <td>reader</td>
+                <td>book</td>
+                <td>{{ order.quantity }}</td>
+                <td>author</td>
+                <td>
+                    {{ statuses[order.status] is defined ? statuses[order.status] : null }}
+                </td>
+                <td>
+                    {% if order.status == constant('App\\Entity\\Order::STATUS_OPEN') %}
+                        <a href="{{ path('order.done', {'id': order.id}) }}" class="btn btn-success">Done</a>
+                        <a href="{{ path('order.edit', {'id': order.id}) }}" class="btn btn-info">Edit</a>
+                    {% endif %}
+
+                    {# {% if order.status == constant('App\\Entity\\Order::STATUS_CANCELED') or order.status == constant('App\\Entity\\Order::STATUS_DONE') %} #}
+                    {# <a href="{{ path('order.open', {'id': order.id}) }}" class="btn btn-primary">Open</a> #}
+                    {# {% endif %} #}
+                    {# <a href="{{ path('order.edit', {'id': order.id}) }}" class="btn btn-info">Edit</a> #}
+                    {# {% if order.status == constant('App\\Entity\\Order::STATUS_OPEN') %} #}
+                    {# {% if order.status != constant('App\\Entity\\Order::STATUS_OPEN') %} #}
+                    {# <a href="{{ path('order.open', {'id': order.id}) }}" class="btn btn-primary">Open</a> #}
+                    {# {% endif %} #}
+                    {# {% if order.status != constant('App\\Entity\\Order::STATUS_CANCELED') %} #}
+                    {# <a href="{{ path('order.cancel', {'id': order.id}) }}" class="btn btn-secondary">Cancel</a> #}
+                    {# {% endif %} #}
+                    {# {% if order.status != constant('App\\Entity\\Order::STATUS_DONE') %} #}
+                    {# <a href="{{ path('order.done', {'id': order.id}) }}" class="btn btn-success">Done</a> #}
+                    {# {% endif %} #}
+                    {# <a href="{{ path('order.status', {'id': order.id}) }}" class="btn btn-outline-info">Status</a> #}
+                    {# <a href="{{ path('order.edit', {'id': order.id}) }}" class="btn btn-info">Edit</a> #}
+                    {# {% endif %} #}
+                    <a href="{{ path('order.delete', {'id': order.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
+                {# <td>{{ book.title }}</td> #}
+                {# <td>{{ book.description }}</td> #}
+                {# <td> #}
+                {# {% set authors = bookManager.authors(book.id) %} #}
+                {# {% for author in authors %} #}
+                {# {{ author.first_name }} {{ author.last_name }} <br/> #}
+                {# {% endfor %} #}
+                {# </td> #}
+                {# {% if app.user and app.user.librarian %} #}
+                {# <td>{{ book.quantity }}</td> #}
+                {# {% endif %} #}
+
+                {# {% if app.user %} #}
+                {# <td> #}
+                {# <a href="{{ path('book.order', {'id': book.id}) }}" class="btn btn-success">Order</a> #}
+
+                {# {% if app.user and app.user.librarian %} #}
+                {# <a href="{{ path('book.edit', {'id': book.id}) }}" class="btn btn-info">Edit</a> #}
+                {# <a href="{{ path('book.delete', {'id': book.id}) }}" class="btn btn-danger">Delete</a> #}
+                {# {% endif %} #}
+                {# </td> #}
+                {# {% endif %} #}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(orders) }}
+    </div>
+{% endblock %}
+

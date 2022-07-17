@@ -1,0 +1,80 @@
+{% extends 'layout.main.html.twig' %}
+{# @var \App\Service\Manager\BookManager bookManager #}
+{# @var \App\Service\Manager\ReadingManager reradingManager #}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('book.list'), 'title': 'Books', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% if app.user and app.user.librarian %}
+        <a href="{{ path('book.add') }}" class="btn btn-info mb-2">Add</a>
+    {% endif %}
+    <div class="float-right mb-2 mr-2">
+        {% include 'default/_partials/search-form.html.twig' with {'action': path('book.list') } %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Author</th>
+            {% if app.user and app.user.librarian %}
+                <th scope="col">Quantity</th>
+                <th scope="col">Reads</th>
+            {% endif %}
+
+            {% if app.user %}
+                <th scope="col">Actions</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for book in books %}
+            {% set countReadBooks = readerManager.countBooks(book.id) %}
+            {% set showOrderButton = countReadBooks < book.quantity %}
+
+            <tr>
+                <th scope="row">{{ book.id }}</th>
+                <td>{{ book.title }}</td>
+                <td>{{ book.description }}</td>
+                <td>
+                    {% set authors = bookManager.authors(book.id) %}
+                    {% for author in authors %}
+                        {{ author.first_name }} {{ author.last_name }} <br/>
+                    {% endfor %}
+                </td>
+                {% if app.user and app.user.librarian %}
+                    <td>{{ book.quantity }}</td>
+                    <td>{{ countReadBooks }}</td>
+                {% endif %}
+
+                {% if app.user %}
+                    <td>
+                        {% if showOrderButton %}
+                            <a href="{{ path('book.order', {'id': book.id}) }}" class="btn btn-success">Order</a>
+                        {% endif %}
+
+                        {% if app.user and app.user.librarian %}
+                            <a href="{{ path('book.edit', {'id': book.id}) }}" class="btn btn-info">Edit</a>
+                            <a href="{{ path('book.delete', {'id': book.id}) }}" class="btn btn-danger">Delete</a>
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(books) }}
+    </div>
+{% endblock %}
+

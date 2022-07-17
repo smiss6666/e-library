@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('css/main') }}
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="app" class="wrappr">
+
+        <!-- Sidebar  -->
+        {% block sidebar %}
+            {{ showSidebar() | raw  }}
+        {% endblock %}
+
+        <!-- Page Content  -->
+        <div id="content">
+
+             {% block breadcrumbs %}
+                {% include 'default/_partials/breadcrumbs.html.twig' %}
+             {% endblock %}
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('js/main') }}
+{% endblock %}

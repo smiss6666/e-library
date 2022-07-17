@@ -1,0 +1,78 @@
+{% extends 'layout.main.html.twig' %}
+{# @var \App\Service\Manager\AuthorManager authorManager #}
+{# @var \App\Service\Manager\BookManager bookManager #}
+{# @var \App\Service\Manager\ReadingManager readingManager #}
+{# @var \App\Service\Manager\UserManager userManager #}
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('reading.list'), 'title': 'Reading', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ path('reading.add') }}" class="btn btn-info mb-2">Add</a>
+    <div class="float-right mb-2 mr-2">
+        {% include 'default/reading/search-form.html.twig' with {'action': path('reading.list') } %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Reading type</th>
+            <th scope="col">Book</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Author</th>
+            <th scope="col">Reader</th>
+            <th scope="col">Start At</th>
+            <th scope="col">End At</th>
+            <th scope="col" width="200px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for reading in readings %}
+            {% set book = bookManager.get(reading.book_id) %}
+            <tr>
+                <th scope="row">{{ reading.id }}</th>
+
+                <td>
+                    {{ readingTypes[reading.reading_type] is defined ? readingTypes[reading.reading_type] : null }}
+                </td>
+
+                <td>
+                    {{ book ? book.title : null }}
+                </td>
+                <td>{{ reading.quantity }}</td>
+                <td>
+                    {% set authors = bookManager.authors(reading.book_id) %}
+                    {% for author in authors %}
+                        {{ author.first_name }} {{ author.last_name }} <br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% set reader = userManager.get(reading.user_id) %}
+                    {{ reader ? reader.first_name : null }}
+                    {{ reader ? reader.last_name : null }}
+                </td>
+                <td>{{ reading.start_at }}</td>
+                <td style="{{ reading.is_expire ? 'background-color: ' ~ expireColor : null }}">
+                    {{ reading.end_at }} <br />
+                    {{ reading.is_expire ? 'penalty: ' ~ penalty : null  }}
+                </td>
+                <td>
+                    <a href="{{ path('reading.edit', {'id': reading.id}) }}" class="btn btn-info">Edit</a>
+                    <a href="{{ path('reading.delete', {'id': reading.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(readings) }}
+    </div>
+{% endblock %}
+

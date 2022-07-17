@@ -1,0 +1,19 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('order.list'), 'title': 'Orders'},
+        {'url': path('order.add'), 'title': 'Add', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('order.add') }}" method="post" novalidate="novalidate">
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+{% endblock %}
+

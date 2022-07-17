@@ -1,0 +1,9 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('homepage'), 'title': 'Home', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}

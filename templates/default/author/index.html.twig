@@ -1,0 +1,46 @@
+{% extends 'layout.main.html.twig' %}
+
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {'url': path('author.list'), 'title': 'Authors', 'active': true},
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ path('author.add') }}" class="btn btn-info mb-2">Add</a>
+    <div class="float-right mb-2 mr-2">
+        {% include 'default/_partials/search-form.html.twig' with {'action': path('author.list') }  %}
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for author in authors %}
+            <tr>
+                <th scope="row">{{ author.id }}</th>
+                <td>{{ author.first_name }}</td>
+                <td>{{ author.last_name }}</td>
+                <td>
+                    <a href="{{ path('author.edit', {'id': author.id}) }}" class="btn btn-info">Edit</a>
+                    <a href="{{ path('author.delete', {'id': author.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(authors) }}
+    </div>
+{% endblock %}
+

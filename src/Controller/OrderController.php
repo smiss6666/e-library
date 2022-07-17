@@ -104,6 +104,15 @@ class OrderController extends AbstractController
         return $this->redirectToRoute('order.list');
     }
 
+    /**
+     * @Route(path="/{id}/cancel", name="order.cancel")
+     */
+    public function cancel(int $id): Response
+    {
+        $this->orderManager->cancel($id);
+
+        return $this->redirectToRoute('order.list');
+    }
 
     /**
      * @Route(path="/{id}/open", name="order.open")

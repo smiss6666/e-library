@@ -149,7 +149,17 @@ class OrderManager extends AbstractManager
 
     public function cancel(int $id): int
     {
-        $this->status($id, ['status' => Order::STATUS_CANCELED]);
+        $sql  = "UPDATE `books` SET
+                `satus` = 'cancelled'
+                WHERE id = :id";
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery([
+            'id'          => $id
+        ]);
+
+        $this->updateAuthors($id, $data['authors'] ?? []);
+
         return $id;
     }
 
@@ -178,5 +188,4 @@ class OrderManager extends AbstractManager
 
         return $id;
     }
-
 }

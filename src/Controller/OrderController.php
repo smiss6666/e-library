@@ -46,6 +46,9 @@ class OrderController extends AbstractController
      */
     public function add(Request $request): Response
     {
+        if ($request.date < DateTime::now()) {
+            throw new \Error("you can't choose past date");
+        }
         $form = $this->orderManager->form(OrderType::class);
         if ($request->isMethod(Request::METHOD_POST) &&
             !($errors = $this->orderManager->handleForm($form, $request))

@@ -54,6 +54,13 @@ class BookType extends AbstractEntityType
                         new GreaterThanOrEqual(['value' => 0])
                     ]
                 ]
+            )
+            ->add(
+                'title',
+                TextType::class,
+                [
+                    'constraints' => new NotBlank()
+                ]
             );
     }
 

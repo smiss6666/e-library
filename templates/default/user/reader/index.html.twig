@@ -13,6 +13,9 @@
     <div class="float-left mb-2 mr-2">
         {% include 'default/_partials/search-form.html.twig' with {'action': path('reader.list'), 'showActive': true }  %}
     </div>
+    <button method="GET" {{path="book.genre"}} class="dropdown">
+        genres
+    </button>
 
     <table class="table">
         <thead>

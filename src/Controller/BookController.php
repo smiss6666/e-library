@@ -104,6 +104,13 @@ class BookController extends AbstractController
         return $this->redirectToRoute('book.list');
     }
 
+    public function search(int $genre): Response
+    {
+        $this->bookManager->delete($genre);
+
+        return $this->redirectToRoute('book.list');
+    }
+
     /**
      * @Route(path="/{id}/order", name="book.order")
      */
